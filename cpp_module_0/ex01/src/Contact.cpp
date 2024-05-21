@@ -24,11 +24,7 @@ void Contact::update_Contact(std::string	first_name,
 
 Contact::~Contact() {}
 
-std::string	Contact::formatted_param(std::string p) {
-	
-}
-
-void	Contact::display_one_line_Contact() {
+void	Contact::display_param(std::string param, bool last) {
 	std::string	displayed;
 
 	if (param.size() > 10)
@@ -40,6 +36,12 @@ void	Contact::display_one_line_Contact() {
 		std::cout << std::endl;
 	else
 		std::cout << "|";
+}
+
+void	Contact::display_one_line_Contact() {
+	display_param(m_first_name, false);
+	display_param(m_last_name, false);
+	display_param(m_nickname, true);
 }
 
 void	Contact::display_full_Contact() {

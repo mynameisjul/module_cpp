@@ -8,16 +8,18 @@
 
 class PhoneBook {
 	private:
-		int		index_of_last_added;
-		Contact	*contacts[8];
+		int			index_of_last_added;
+		int			number_of_contacts;
+		Contact		contacts[8];
 		std::string get_param(std::string message);
-		void	display_one_line_Contact(int index, bool last);
+		int			get_index();
 
 	public:
 		PhoneBook();
 		~PhoneBook();
 		void	update_PhoneBook();
 		void	display_PhoneBook();
+		void	search_PhoneBook();
 };
 
 #endif

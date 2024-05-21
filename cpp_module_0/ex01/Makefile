@@ -1,44 +1,65 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jblaye <jblaye@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/22 22:16:08 by julieblaye        #+#    #+#              #
-#    Updated: 2024/05/19 23:48:46 by jblaye           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+### PROGRAM NAME ###
+NAME		:= phonebook
 
-NAME = phonebook
+### UTILS ###
+CC			:= c++
+CPPFLAGS		:= -Wall -Wextra -Werror -std=c++98
+DEP_FLAGS	:= -MMD -MP
+MAKE_FLAG	:= --no-print-directory --silent
+RM			:= rm -rf
+ifeq (debug, $(filter debug,$(MAKECMDGOALS)))
+	CPPFLAGS += -g3
+endif
 
-# --------------------------------- FILES ------------------------------------ #
+### DIRECTORIES ###
+SRC_DIR 	:= src
+INCLD_DIR 	:= include
+OBJS_DIR 	:= objs
 
-SRCS = Contact.cpp PhoneBook.cpp main.cpp
-HEADERS = Contact.hpp PhoneBook.hpp
+### FILES ###
+SRC 		:=	main.cpp \
+				Contact.cpp \
+				PhoneBook.cpp
+INCLUDES	:=	$(INCLD_DIR)
+INCLD_FLAG 	:= 	$(addprefix -I , $(INCLUDES))
+OBJS 		:= 	$(patsubst %.cpp,$(OBJS_DIR)/%.o,$(SRC))
+DEPS		:= 	$(patsubst %.cpp,$(OBJS_DIR)/%.d,$(SRC))
 
-# ------------------------------ COMPILATION --------------------------------- #
+### COLORS ###
+DEFAULT    	:= \033[0m
+BLACK    	:= \033[0;30m
+RED        	:= \033[0;31m
+GREEN    	:= \033[0;32m
+UGREEN    	:= \033[4;32m
+YELLOW    	:= \033[;33m
+BLUE    	:= \033[0;34m
+PURPLE    	:= \033[0;35m
+CYAN    	:= \033[0;36m
+BWHITE    	:= \033[1;37m
+NEW			:= \r\033[K
 
-C++ = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -I $(HEADERS)
-OBJS = $(SRCS:.cpp=.o)
+### PROJECT ###
+all: $(NAME)
 
-# --------------------------------- RULES ------------------------------------ #
+$(NAME): $(OBJS)
+	@printf "$(NEW)$(PURPLE)[$(NAME)] $(UGREEN)Building:$(DEFAULT)$(BWHITE) $@$(DEFAULT)"
+	@$(CC) $(CPPFLAGS) $(OBJS) $(INCLD_FLAG) -o $@
+	@printf "\n"
 
-all:		$(NAME)
+-include $(DEPS)
+$(OBJS_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@printf "$(NEW)$(PURPLE)[$(NAME)] $(UGREEN)Building:$(DEFAULT) $<"
+	@mkdir -p $(OBJS_DIR)
+	@$(CC) $(DEP_FLAGS) $(CPPFLAGS) $(INCLD_FLAG) -c $< -o $@
 
-%.o:		%.cpp
-			$(C++) $(CFLAGS) -c $< -o $@
+clean: ; @printf "$(PURPLE)[$(NAME)] $(RED)Removing $(DEFAULT)$(OBJS_DIR) files\n"
+	@$(RM) $(OBJS_DIR)
 
-$(NAME):	$(OBJS)
-			$(C++) $(CFLAGS) $(OBJS) -o $(NAME)
+fclean: clean ; @printf "$(PURPLE)[$(NAME)] $(RED)Removing $(DEFAULT)$(NAME)\n"
+	@$(RM) $(NAME)
 
-clean:
-			rm -f $(OBJS)
+re: fclean all
 
-fclean:		clean
-			rm -f $(NAME)
+debug: fclean all
 
-re:			clean $(NAME)
-
-.PHONY:		all clean re
+.PHONY: all clean fclean re debug

@@ -12,7 +12,7 @@ class Contact {
 		std::string	m_nickname;
 		std::string	m_phone_number;
 		std::string m_darkest_secret;
-		std::string	formatted_param();
+		void		display_param(std::string param, bool last);
 
 	public:
 		Contact();
@@ -22,7 +22,7 @@ class Contact {
 					std::string	nickname,
 					std::string	phone_number,
 					std::string darkest_secret);
-		void	display_one_line_Contact(std::string param);
+		void	display_one_line_Contact();
 		void	display_full_Contact();
 };
 
