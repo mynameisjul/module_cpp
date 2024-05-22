@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
@@ -10,7 +11,10 @@ std::string get_input() {
 	while (input[0] == 0)
 	{
 		std::cout << "To start, enter a command [ADD, SEARCH, EXIT]" << std::endl;
-		std::getline(std::cin, input);
+		if (!std::getline(std::cin, input))
+			return ("");
+		if (std::cin.eof())
+			return ("");
 		if (input.compare("ADD") && input.compare("EXIT") && input.compare("SEARCH") && input.compare("HELP"))
 			std::cout << "Invalid command. Please try again." << std::endl;
 		else
@@ -27,12 +31,16 @@ std::string get_input() {
 	return (input);
 }
 
-void	add(PhoneBook &my_phonebook) {
-	my_phonebook.update_PhoneBook();
+int	add(PhoneBook &my_phonebook) {
+	if (my_phonebook.update_PhoneBook() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
-void	search(PhoneBook &my_phonebook) {
-	my_phonebook.search_PhoneBook();
+int	search(PhoneBook &my_phonebook) {
+	if (my_phonebook.search_PhoneBook() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int main(void) {
@@ -42,12 +50,18 @@ int main(void) {
 	std::cout << "Welcome to your ultra-modern phonebook" << std::endl;
 	while (cmd.compare("EXIT"))
 	{
-		if (!cmd.compare("ADD"))
-			add(my_phonebook);
-		else if (!cmd.compare("SEARCH"))
-			search(my_phonebook);
+		if (!cmd.compare("ADD")){
+			if (add(my_phonebook) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		else if (!cmd.compare("SEARCH")){
+			if (search(my_phonebook) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		if (std::cin.eof())
+			return (EXIT_FAILURE);
 		cmd = get_input();
 	}
 	std::cout << "Phonebook will be exited and deleted . . ." << std::endl;
-	return (0);
+	return (EXIT_SUCCESS);
 }

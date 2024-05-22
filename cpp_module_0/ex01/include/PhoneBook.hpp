@@ -15,11 +15,11 @@ class PhoneBook {
 		int			get_index();
 
 	public:
-		PhoneBook();
-		~PhoneBook();
-		void	update_PhoneBook();
-		void	display_PhoneBook();
-		void	search_PhoneBook();
+					PhoneBook();
+					~PhoneBook();
+		int			update_PhoneBook();
+		void		display_PhoneBook();
+		int			search_PhoneBook();
 };
 
 #endif
