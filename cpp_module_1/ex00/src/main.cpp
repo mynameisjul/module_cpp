@@ -36,14 +36,13 @@ int main() {
 				Zombie *new_zombie;
 
 				new_zombie = newZombie(name);
+				new_zombie->announce();
 				delete(new_zombie);
 			}
 
 			// Creates Zombie on the stack
 			if (line == "RANDC")
-			{
-				Zombie new_zombie(name);
-			}
+				randomChump(name);
 		}
 		
 		// Exits program

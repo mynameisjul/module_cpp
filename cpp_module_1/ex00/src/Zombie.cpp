@@ -1,11 +1,9 @@
 #include "Zombie.h"
 
 Zombie::Zombie() : _name("Random Zombie") {
-	Zombie::announce();
 }
 
 Zombie::Zombie(std::string name) : _name(name) {
-	Zombie::announce();
 }
 
 Zombie::~Zombie() {
