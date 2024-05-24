@@ -48,7 +48,7 @@ int main(int ac, char **av) {
 		i = get_index(N);
 		if (i == -1)
 			break;
-		if (i >= 0 && i <= N) {
+		if (i >= 0 && i < N) {
 			std::cout << YEL << "Zombie " << i << " will now announce himself" << RESET << std::endl;
 			horde[i].announce();
 		}
