@@ -1,5 +1,5 @@
 ### PROGRAM NAME ###
-NAME		:= name
+NAME		:= thisisbrain
 
 ### UTILS ###
 CC			:= c++
@@ -12,7 +12,7 @@ ifeq (debug, $(filter debug,$(MAKECMDGOALS)))
 endif
 
 ### DIRECTORIES ###
-SRC_DIR 	:= src
+SRC_DIR 	:= ./
 INCLD_DIR 	:= include
 OBJS_DIR 	:= objs
 
