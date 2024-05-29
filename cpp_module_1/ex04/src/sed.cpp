@@ -4,13 +4,13 @@ bool Sed::open_files(const std::string &file_name)
 {
 	std::string replace_file_name = file_name + ".replace";
 
-	_outfile.open(replace_file_name);
-	if (!_outfile)
-		return (false);
-	
 	_infile.open(file_name);
 	if (!_infile)
 		return (_outfile.close(), false);
+	
+	_outfile.open(replace_file_name);
+	if (!_outfile)
+		return (false);
 	
 	return (true);
 }
@@ -18,20 +18,26 @@ bool Sed::open_files(const std::string &file_name)
 bool Sed::sed(const std::string &file_name)
 {
 	std::string line;
-	
+	bool		first_loop(true);
+
 	if (open_files(file_name) == false) return (false);
 	while (getline(_infile, line))
 	{
-		size_t pos(0);
-
-		pos = line.find(_search);
-		while (pos != std::string::npos) {
-			line.erase(pos, _search_len);
-			//line.resize(line.size() + _replace.size());
-			line.insert(pos, _replace);
-			pos = line.find(_search, pos + _replace_len);
+		if (first_loop == false)
+			_outfile << std::endl;
+		if (first_loop == true)
+			first_loop = false;
+		if (!_search.empty())
+			{
+			size_t pos(0);
+			pos = line.find(_search);
+			while (pos != std::string::npos) {				
+				line.erase(pos, _search_len);
+				line.insert(pos, _replace);
+				pos = line.find(_search, pos + _replace_len);
+			}
 		}
-		_outfile << line << std::endl;
+		_outfile << line;
 	}
 	return (true);
 }
