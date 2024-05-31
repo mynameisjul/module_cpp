@@ -1,5 +1,5 @@
 ### PROGRAM NAME ###
-NAME		:= name
+NAME		:= fixed
 
 ### UTILS ###
 CC			:= c++
@@ -17,7 +17,8 @@ INCLD_DIR 	:= include
 OBJS_DIR 	:= objs
 
 ### FILES ###
-SRC 		:=	main.cpp
+SRC 		:=	main.cpp \
+				Fixed.cpp
 INCLUDES	:=	$(INCLD_DIR)
 INCLD_FLAG 	:= 	$(addprefix -I , $(INCLUDES))
 OBJS 		:= 	$(patsubst %.cpp,$(OBJS_DIR)/%.o,$(SRC))
