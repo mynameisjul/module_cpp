@@ -1,0 +1,7 @@
+========================
+======NOTES ON CPP======
+========================
+
+________________________
+=======OPERATORS========
+l'operateur = renvoit toujours une référence vers this

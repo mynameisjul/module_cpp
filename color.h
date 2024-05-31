@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcutte <rcutte@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jblaye <jblaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:37:53 by rcutte            #+#    #+#             */
-/*   Updated: 2024/04/04 18:26:32 by rcutte           ###   ########.fr       */
+/*   Updated: 2024/05/30 11:32:18 by jblaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,6 @@
 # define C_CLEAR_BROWN 0xcd853f
 
 // ANSI Color
-//Regular text
-# define BLK "\e[0;30m"
-# define RED "\e[0;31m"
-# define GRN "\e[0;32m"
-# define YEL "\e[0;33m"
-# define BLU "\e[0;34m"
-# define MAG "\e[0;35m"
-# define CYN "\e[0;36m"
-# define WHT "\e[0;37m"
-
-//Regular bold text
-# define BBLK "\e[1;30m"
-# define BRED "\e[1;31m"
-# define BGRN "\e[1;32m"
-# define BYEL "\e[1;33m"
-# define BBLU "\e[1;34m"
-# define BMAG "\e[1;35m"
-# define BCYN "\e[1;36m"
-# define BWHT "\e[1;37m"
 
 //Regular underline text
 # define UBLK "\e[4;30m"
@@ -108,6 +89,26 @@
 # define BHMAG "\e[1;95m"
 # define BHCYN "\e[1;96m"
 # define BHWHT "\e[1;97m"
+
+//Regular text
+# define BLK "\e[0;30m"
+# define RED "\e[0;31m"
+# define GRN "\e[0;32m"
+# define YEL "\e[0;33m"
+# define BLU "\e[0;34m"
+# define MAG "\e[0;35m"
+# define CYN "\e[0;36m"
+# define WHT "\e[0;37m"
+
+//Regular bold text
+# define BBLK "\e[1;30m"
+# define BRED "\e[1;31m"
+# define BGRN "\e[1;32m"
+# define BYEL "\e[1;33m"
+# define BBLU "\e[1;34m"
+# define BMAG "\e[1;35m"
+# define BCYN "\e[1;36m"
+# define BWHT "\e[1;37m"
 
 // ANSI Reset
 # define RESET "\033[0m"
