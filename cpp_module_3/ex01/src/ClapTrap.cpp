@@ -1,6 +1,6 @@
 #include "ClapTrap.hpp"
 
-// ========== CONSTRUCTOR AND DESTRUCTORS
+// ========== CONSTRUCTORS AND DESTRUCTOR
 ClapTrap::ClapTrap() : _name("default"), _hit_points(100), _energy_points(50),_attack_damage(20) {
 	std::cout << BGRN << "Creating random ClapTrap..." << RESET << std::endl;
 }

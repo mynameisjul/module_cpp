@@ -1,10 +1,11 @@
+#include "ScavTrap.hpp"
 #include "ClapTrap.hpp"
 
 int main( void ) {
-	ClapTrap a;
-	ClapTrap b("ClapTrap B");
-	ClapTrap c(b);
-	ClapTrap d = b;
+	ScavTrap a;
+	ScavTrap b("ScavTrap B");
+	ScavTrap c(b);
+	ScavTrap d = b;
 
 	a.beRepaired(10);
 	const std::string dName = "d";
