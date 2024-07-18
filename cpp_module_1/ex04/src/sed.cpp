@@ -4,11 +4,11 @@ bool Sed::open_files(const std::string &file_name)
 {
 	std::string replace_file_name = file_name + ".replace";
 
-	_infile.open(file_name);
+	_infile.open(file_name.c_str());
 	if (!_infile)
 		return (_outfile.close(), false);
 	
-	_outfile.open(replace_file_name);
+	_outfile.open(replace_file_name.c_str());
 	if (!_outfile)
 		return (false);
 	
