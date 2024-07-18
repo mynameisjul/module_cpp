@@ -1,8 +1,8 @@
 #!/bin/bash
 
 read -p "enter module number " mod_number
-mkdir -p "cpp_module_$mod_number"
-cd cpp_module_$mod_number 
+mkdir -p "$mod_number"CPP
+cd "$mod_number"CPP
 for i in 0 1 2 3 4 5 6
 do
 	mkdir -p ex0$i
