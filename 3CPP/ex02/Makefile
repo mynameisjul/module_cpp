@@ -1,9 +1,9 @@
 ### PROGRAM NAME ###
-NAME		:= name
+NAME		:= fragtrap
 
 ### UTILS ###
 CC			:= c++
-CPPFLAGS		:= -Wall -Wextra -Werror -std=c++98
+CPPFLAGS	:= -Wall -Wextra -Werror -std=c++98
 DEP_FLAGS	:= -MMD -MP
 MAKE_FLAG	:= --no-print-directory --silent
 RM			:= rm -rf
@@ -17,7 +17,7 @@ INCLD_DIR 	:= include
 OBJS_DIR 	:= objs
 
 ### FILES ###
-SRC 		:=	main.cpp
+SRC 		:=	main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
 INCLUDES	:=	$(INCLD_DIR)
 INCLD_FLAG 	:= 	$(addprefix -I , $(INCLUDES))
 OBJS 		:= 	$(patsubst %.cpp,$(OBJS_DIR)/%.o,$(SRC))
