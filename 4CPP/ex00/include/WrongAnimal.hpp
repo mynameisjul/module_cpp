@@ -9,12 +9,13 @@ protected:
     std::string _type;
 
 public:
-    Animal();
-    Animal(std::string type);
-    Animal(Animal const &other);
-    Animal &operator=(Animal const &other);
-    virtual ~Animal();
+    WrongAnimal();
+    WrongAnimal(std::string type);
+    WrongAnimal(WrongAnimal const &other);
+    WrongAnimal &operator=(WrongAnimal const &other);
+    virtual ~WrongAnimal();
     void makeSound() const;
+    std::string getType() const;
 };
 
 #endif /* WRONG_ANIMAL_HPP */

@@ -13,6 +13,7 @@ Animal::Animal(std::string type) : _type(type)
 Animal::Animal(Animal const &other)
 {
     std::cout << BGRN << "[Animal] Calling copy constructor with type " << _type << RESET << std::endl;
+    *this = other;
 }
 
 Animal &Animal::operator=(Animal const &other)
@@ -29,4 +30,12 @@ Animal::~Animal()
     std::cout << BRED << "[Animal] Destroying animal of type " << _type << RESET << std::endl;
 }
 
-void Animal::makeSound() const {}
+void Animal::makeSound() const
+{
+    std::cout << "Generic animals do not make sounds" << std::endl;
+}
+
+std::string Animal::getType() const
+{
+    return (_type);
+}
