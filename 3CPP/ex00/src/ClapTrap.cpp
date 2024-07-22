@@ -1,11 +1,11 @@
 #include "ClapTrap.hpp"
 
 // ========== CONSTRUCTOR AND DESTRUCTORS
-ClapTrap::ClapTrap() : _name("default"), _hit_points(10), _energy_points(10),_attack_damage(10) {
+ClapTrap::ClapTrap() : _name("default"), _hit_points(10), _energy_points(10),_attack_damage(0) {
 	std::cout << BGRN << "Creating random ClapTrap..." << RESET << std::endl;
 }
 
-ClapTrap::ClapTrap(std::string name) : _name(name), _hit_points(10), _energy_points(10),_attack_damage(10) {
+ClapTrap::ClapTrap(std::string name) : _name(name), _hit_points(10), _energy_points(10),_attack_damage(0) {
 	std::cout << BGRN << "Creating ClapTrap named " << _name << "..." << RESET << std::endl;
 }
 
@@ -50,21 +50,19 @@ void ClapTrap::attack(const std::string& target) {
 		return ;
 	}
 	_energy_points--;
-	std::cout << YEL << _name << " is attacking " << target << RESET << std::endl;
-	std::cout << YEL << target << " loses " << _attack_damage << " hit points" << RESET << std::endl;
+	std::cout << YEL << "[ClapTrap] " << _name << " is attacking " << target << RESET << std::endl;
 }
 
 
 void ClapTrap::takeDamage(unsigned int amount) {
-	if (_hit_points < amount) {
-		std::cout << RED << _name << " took " << _hit_points << " damage and now they ded" << RESET << std::endl;
+	if (_hit_points < amount)
 		_hit_points = 0;
-	}
 	else
-	{
 		_hit_points -= amount;
+	if (_hit_points == 0)
+		std::cout << RED << _name << " is now dead" << RESET << std::endl;
+	else
 		std::cout << RED << _name << " took " << amount << " damage and it hurts :'(" << RESET << std::endl;
-	}
 }
 
 void ClapTrap::beRepaired(unsigned int amount) {

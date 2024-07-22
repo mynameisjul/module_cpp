@@ -3,14 +3,14 @@
 // ========== CONSTRUCTORS AND DESTRUCTOR
 FragTrap::FragTrap() : ClapTrap() {
 	_energy_points = 100;
-	_hit_points = 50;
+	_hit_points = 100;
 	_attack_damage = 30;
 	std::cout << BGRN << "### Creating random FragTrap..." << RESET << std::endl;
 }
 
 FragTrap::FragTrap(std::string name) : ClapTrap(name) {
 	_energy_points = 100;
-	_hit_points = 50;
+	_hit_points = 100;
 	_attack_damage = 30;
 	std::cout << BGRN << "### Creating FragTrap named " << name << RESET << std::endl;
 }
@@ -40,4 +40,17 @@ FragTrap::~FragTrap() {
 
 void FragTrap::highFivesGuys(void) {
 	std::cout << "### " << " HIGH FIVES GUYS SO GOOOOOD TO SEE YAAAAh" << std::endl;
+}
+
+void FragTrap::attack(const std::string& target) {
+	if (_energy_points < 1) {
+		std::cout << RED << "No energy left to attack." << RESET << std::endl;
+		return ;
+	}
+	if (_hit_points == 0) {
+		std::cout << RED << "No hit points left to attack." << RESET << std::endl;
+		return ;
+	}
+	_energy_points--;
+	std::cout << YEL << "[FragTrap] " << _name << " is attacking " << target << RESET << std::endl;
 }

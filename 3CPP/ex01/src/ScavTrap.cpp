@@ -38,6 +38,19 @@ ScavTrap::~ScavTrap() {
 
 // ========== PUBLIC MEMBER FUNCTIONS
 
+void ScavTrap::attack(const std::string& target) {
+	if (_energy_points < 1) {
+		std::cout << RED << "[ScavTrap] No energy left to attack." << RESET << std::endl;
+		return ;
+	}
+	if (_hit_points == 0) {
+		std::cout << RED << "[ScavTrap] No hit points left to attack." << RESET << std::endl;
+		return ;
+	}
+	_energy_points--;
+	std::cout << YEL << "[ScavTrap] " << _name << " is attacking " << target << RESET << std::endl;
+}
+
 void ScavTrap::guardGate() {
 	std::cout << "=== " << _name << " is now in Gate keeper mode." << std::endl;
 }

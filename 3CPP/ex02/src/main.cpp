@@ -11,6 +11,7 @@ int main( void ) {
 
 	a.beRepaired(10);
 	b.attack("a");
+	f.attack("Coucou");
 	a.takeDamage(20);
 	std::cout << "a has " << a.getHitPoints() << " hit points." << std::endl;
 	a.attack("c");
