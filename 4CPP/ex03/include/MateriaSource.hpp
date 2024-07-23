@@ -1,12 +1,11 @@
-#ifndef MATERIASOURCE_HPP
-#define MATERIASOURCE_HPP
+#ifndef MATERIA_SOURCE_HPP
+#define MATERIA_SOURCE_HPP
 
 #include "interface.h"
 
 class MateriaSource {
 	private:
-		AMateria 		**_world_resources;
-		unsigned int	_n_resources;
+		AMateria 		*_materias[4];
 	public:
 		// Member functions
 
@@ -17,4 +16,4 @@ class MateriaSource {
 		virtual AMateria* createMateria(std::string const & type) = 0;
 };
 
-#endif /* MATERIASOURCE_HPP */
+#endif /* MATERIA_SOURCE_HPP */

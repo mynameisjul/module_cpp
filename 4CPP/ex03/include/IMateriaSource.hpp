@@ -1,5 +1,5 @@
-#ifndef IMATERIASOURCE_HPP
-#define IMATERIASOURCE_HPP
+#ifndef IMATERIA_SOURCE_HPP
+#define IMATERIA_SOURCE_HPP
 
 #include "interface.h"
 
@@ -11,4 +11,4 @@ class IMateriaSource
 		virtual AMateria* createMateria(std::string const & type) = 0;
 };
 
-#endif /* IMATERIASOURCE_HPP */
+#endif /* IMATERIA_SOURCE_HPP */

@@ -11,6 +11,7 @@
 #include "Character.hpp"
 #include "IMateriaSource.hpp"
 #include "MateriaSource.hpp"
+#include "WorldResources.hpp"
 
 
 // Regular text
