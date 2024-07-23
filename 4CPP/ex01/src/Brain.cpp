@@ -31,13 +31,19 @@ Brain::~Brain() {
 
 // ========== GETTERS AND SETTERS
 std::string *Brain::getIdeas() {
+	std::cout << "[🧠 Brain] Calling brain getter" << std::endl;
 	return(_ideas);
 }
 
-std::string getIdea(int index) {
-	return (_ideas[index]);
+std::string Brain::getIdea(int index) {
+	std::cout << "[🧠 Brain] Calling brain getter" << std::endl;
+	if (index >= 0 && index <= MAX_IDEAS)
+		return (_ideas[index]);
+	return (0);
 }
 
-void setIdea(int index, std::string idea) {
-	_ideas[index] = idea;
+void Brain::setIdea(int index, std::string idea) {
+	std::cout << "[🧠 Brain] Calling brain setter" << std::endl;
+	if (index >= 0 && index <= MAX_IDEAS)
+		_ideas[index] = idea;
 }

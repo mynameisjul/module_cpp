@@ -5,12 +5,19 @@
 
 class Cat : public Animal
 {
-public:
-	Cat();
-	Cat(Cat const &other);
-	Cat &operator=(Cat const &other);
-	virtual ~Cat();
-	virtual void makeSound() const;
+	private:
+		Brain *_brain;
+	public:
+		Cat();
+		Cat(Cat const &other);
+		Cat &operator=(Cat const &other);
+		virtual ~Cat();
+		
+		virtual void makeSound() const;
+
+		std::string *getIdeas();
+		std::string getIdea(int index);
+		void setIdea(int index, std::string idea);
 };
 
 #endif

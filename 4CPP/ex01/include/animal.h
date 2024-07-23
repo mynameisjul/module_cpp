@@ -3,12 +3,13 @@
 
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 #include "Animal.hpp"
+#include "Brain.hpp"
 #include "Dog.hpp"
 #include "Cat.hpp"
 #include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
-#include "Brain.hpp"
 
 #define MAX_IDEAS 100
 
