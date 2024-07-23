@@ -3,7 +3,7 @@
 int main()
 {
 	// Array creation
-	Animal *animals[100];
+	AAnimal *animals[100];
 	
 	int i = 0;
 	while (i < 50) {
@@ -76,6 +76,10 @@ int main()
 		if (line == "EXIT")
 			break;
 	}
+
+	//If i remove this line: does not compile (AAnimal is an abstract class)
+	//AAnimal animal_test;
+
 	for (int i = 0; i < MAX_IDEAS; i++)
 	{
 		delete animals[i];

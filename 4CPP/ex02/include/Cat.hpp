@@ -3,7 +3,7 @@
 
 #include "animal.h"
 
-class Cat : public Animal
+class Cat : public AAnimal
 {
 	private:
 		Brain *_brain;

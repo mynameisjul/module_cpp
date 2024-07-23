@@ -28,12 +28,12 @@ void Dog::makeSound() const {
 }
 
 // ========== CONSTRUCTORS AND DESTRUCTOR
-Dog::Dog() : Animal("Dog"){
+Dog::Dog() : AAnimal("Dog"){
     std::cout << BGRN << "[Dog 🐕] Calling constructor" << RESET << std::endl;
     _brain = new Brain("I wanna be the goodest boy EVER!");
 }
 
-Dog::Dog(Dog const &other) : Animal(other){
+Dog::Dog(Dog const &other) : AAnimal(other){
     std::cout << BGRN << "[Dog 🐕] Calling copy constructor" << RESET << std::endl;
     *this = other;
 }
@@ -41,7 +41,7 @@ Dog::Dog(Dog const &other) : Animal(other){
 Dog &Dog::operator=(Dog const &other){
     std::cout << GRN << "[Dog 🐕] Calling copy assignment operator" << RESET << std::endl;
     if (this != &other)
-        Animal::operator=(other);
+        AAnimal::operator=(other);
     *this->_brain = *other._brain;
     return (*this);
 }

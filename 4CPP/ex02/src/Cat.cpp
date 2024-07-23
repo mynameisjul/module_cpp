@@ -29,12 +29,12 @@ void Cat::setIdea(int index, std::string idea) {
 }
 
 // ========== CONSTRUCTORS AND DESTRUCTOR
-Cat::Cat() : Animal("Cat") {
+Cat::Cat() : AAnimal("Cat") {
     std::cout << BGRN << "[Cat 🐈] Calling constructor" << RESET << std::endl;
     _brain = new Brain("I hate hoomans");
 }
 
-Cat::Cat(Cat const &other) : Animal(other) {
+Cat::Cat(Cat const &other) : AAnimal(other) {
     std::cout << BGRN << "[Cat 🐈] Calling copy constructor" << RESET << std::endl;
     *this = other;
 }
@@ -42,7 +42,7 @@ Cat::Cat(Cat const &other) : Animal(other) {
 Cat &Cat::operator=(Cat const &other) {
     std::cout << GRN << "[Cat 🐈] Calling copy assignment operator" << RESET << std::endl;
     if (this != &other)
-        Animal::operator=(other);
+        AAnimal::operator=(other);
     *this->_brain = *other._brain;
     return (*this);
 }

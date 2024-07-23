@@ -1,54 +1,54 @@
 #include "animal.h"
 
-Animal::Animal() : _type("default") {
-    std::cout << BGRN << "[Animal] Creating default animal" << RESET << std::endl;
+AAnimal::AAnimal() : _type("default") {
+    std::cout << BGRN << "[AAnimal] Creating default Aanimal" << RESET << std::endl;
 }
 
-Animal::Animal(std::string type) : _type(type) {
-    std::cout << BGRN << "[Animal] Creating animal of type " << type << RESET << std::endl;
+AAnimal::AAnimal(std::string type) : _type(type) {
+    std::cout << BGRN << "[AAnimal] Creating Aanimal of type " << type << RESET << std::endl;
 }
 
-Animal::Animal(Animal const &other)
+AAnimal::AAnimal(AAnimal const &other)
 {
-    std::cout << BGRN << "[Animal] Calling copy constructor with type " << _type << RESET << std::endl;
+    std::cout << BGRN << "[AAnimal] Calling copy constructor with type " << _type << RESET << std::endl;
     *this = other;
 }
 
-Animal &Animal::operator=(Animal const &other)
+AAnimal &AAnimal::operator=(AAnimal const &other)
 {
-    std::cout << BGRN << "[Animal] Calling copy assignement operator" << RESET << std::endl;
+    std::cout << BGRN << "[AAnimal] Calling copy assignement operator" << RESET << std::endl;
     if (this == &other)
         return (*this);
     _type = other._type;
     return (*this);
 }
 
-Animal::~Animal()
+AAnimal::~AAnimal()
 {
-    std::cout << BRED << "[Animal] Destroying animal of type " << _type << RESET << std::endl;
+    std::cout << BRED << "[AAnimal] Destroying Aanimal of type " << _type << RESET << std::endl;
 }
 
 // ========== MEMBER FUNCTIONS, GETTERS, SETTERS
-void Animal::makeSound() const
+void AAnimal::makeSound() const
 {
-    std::cout << "Generic animals do not make sounds" << std::endl;
+    std::cout << "Generic Aanimals do not make sounds" << std::endl;
 }
 
-std::string Animal::getType() const
+std::string AAnimal::getType() const
 {
     return (_type);
 }
 
-std::string *Animal::getIdeas() {
+std::string *AAnimal::getIdeas() {
     return (0);
 }
 
-std::string Animal::getIdea(int index) {
+std::string AAnimal::getIdea(int index) {
     (void) index;
     return (0);
 }
 
-void Animal::setIdea(int index, std::string idea) {
+void AAnimal::setIdea(int index, std::string idea) {
     (void) index;
     (void) idea;
 }
