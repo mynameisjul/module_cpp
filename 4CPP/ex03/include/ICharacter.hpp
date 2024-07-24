@@ -3,6 +3,8 @@
 
 #include "interface.h"
 
+class AMateria;
+
 class ICharacter
 {
 	public:

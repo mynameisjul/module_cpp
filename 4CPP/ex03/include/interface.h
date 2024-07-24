@@ -5,14 +5,13 @@
 #include <string>
 #include <stdlib.h>
 #include "AMateria.hpp"
+#include "ICharacter.hpp"
 #include "Ice.hpp"
 #include "Cure.hpp"
-#include "ICharacter.hpp"
 #include "Character.hpp"
 #include "IMateriaSource.hpp"
 #include "MateriaSource.hpp"
-#include "WorldResources.hpp"
-
+//#include "WorldResources.hpp"
 
 // Regular text
 #define BLK "\e[0;30m"

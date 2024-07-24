@@ -3,17 +3,18 @@
 
 #include "interface.h"
 
-class MateriaSource {
+class MateriaSource : public IMateriaSource {
 	private:
 		AMateria 		*_materias[4];
 	public:
 		// Member functions
-
-		// Consstructor and destructors
+		virtual void learnMateria(AMateria* other);
+		virtual AMateria* createMateria(std::string const & type);
+		// Constructor and destructors
 		MateriaSource();
-		~MateriaSource()
-		virtual void learnMateria(AMateria*) = 0;
-		virtual AMateria* createMateria(std::string const & type) = 0;
+		MateriaSource(MateriaSource const &other);
+		MateriaSource &operator=(MateriaSource const &other);
+		~MateriaSource();
 };
 
 #endif /* MATERIA_SOURCE_HPP */

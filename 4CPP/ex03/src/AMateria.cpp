@@ -1,8 +1,8 @@
 #include "interface.h"
 
-// Member functions
+// Member functions are all virtual
 void AMateria::use(ICharacter& target) {
-	
+	(void) target;
 }
 		
 // Getters and setters
@@ -23,6 +23,7 @@ AMateria::AMateria(AMateria const &other) {
 
 AMateria & AMateria::operator=(AMateria const &other) {
 	std::cout << GRN << "[AMateria] Calling copy assignment operator" << RESET << std::endl;
+	_type = other._type;
 	return (*this);
 }
 AMateria::~AMateria() {
