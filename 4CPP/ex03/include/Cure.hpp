@@ -1,4 +1,4 @@
-#ifndef CURE_HPP
+	#ifndef CURE_HPP
 #define CURE_HPP
 
 #include "interface.h"

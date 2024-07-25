@@ -15,20 +15,20 @@ void Ice::use(ICharacter& target) {
 
 // Constructors and destructor
 Ice::Ice() : AMateria("ice") {
-	std::cout << BGRN << "[Ice] Calling constructor" << RESET << std::endl;
+	std::cout << BGRN << "[Ice]" << RESET << " Calling constructor" << RESET << std::endl;
 }
 
 Ice::Ice(Ice const &other) : AMateria(other) {
-	std::cout << BGRN << "[Ice] Calling copy constructor" << RESET << std::endl;
+	std::cout << BGRN << "[Ice]" << RESET << " Calling copy constructor" << RESET << std::endl;
 }
 
 Ice &Ice::operator=(Ice const &other) {
-	std::cout << GRN << "[Ice] Calling copy assignement operator" << RESET << std::endl;
+	std::cout << GRN << "[Ice]" << RESET << " Calling copy assignement operator" << RESET << std::endl;
 	if (this != &other)
 		AMateria::operator=(other);
 	return (*this);
 }
 
 Ice::~Ice() {
-	std::cout << BRED << "[Ice] Calling destructor" << RESET << std::endl;
+	std::cout << BRED << "[Ice]" << RESET << " Calling destructor" << RESET << std::endl;
 }

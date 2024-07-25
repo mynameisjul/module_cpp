@@ -15,20 +15,20 @@ void Cure::use(ICharacter& target) {
 
 // Constructors and destructor
 Cure::Cure() : AMateria("cure") {
-	std::cout << BGRN << "[Cure] Calling constructor" << RESET << std::endl;
+	std::cout << BGRN << "[Cure]" << RESET << " Calling constructor" << RESET << std::endl;
 }
 
 Cure::Cure(Cure const &other) : AMateria(other) {
-	std::cout << BGRN << "[Cure] Calling copy constructor" << RESET << std::endl;
+	std::cout << BGRN << "[Cure]" << RESET << " Calling copy constructor" << RESET << std::endl;
 }
 
 Cure &Cure::operator=(Cure const &other) {
-	std::cout << GRN << "[Cure] Calling copy assignement operator" << RESET << std::endl;
+	std::cout << GRN << "[Cure]" << RESET << " Calling copy assignement operator" << RESET << std::endl;
 	if (this != &other)
 		AMateria::operator=(other);
 	return (*this);
 }
 
 Cure::~Cure() {
-	std::cout << BRED << "[Cure] Calling destructor" << RESET << std::endl;
+	std::cout << BRED << "[Cure]" << RESET << " Calling destructor" << RESET << std::endl;
 }

@@ -11,7 +11,7 @@ void Character::equip(AMateria* m) {
 	while (i < 4 && _inventory[i] != 0)
 		i++;
 	if (i == 4) {
-		std::cout << RED << "[Character] Could not equip materia: inventory is full" << RESET << std::endl;
+		std::cout << RED << "[Character]" << RESET << " Could not equip materia: inventory is full" << RESET << std::endl;
 		return ;
 	}
 	else {
@@ -29,31 +29,31 @@ void Character::unequip(int idx) {
 
 void Character::use(int idx, ICharacter& target) {
 	if (!_inventory[idx])
-		std::cout << RED << "[Character] No materia available" << RESET << std::endl;
+		std::cout << RED << "[Character]" << RESET << " No materia available" << RESET << std::endl;
 	else
 		_inventory[idx]->use(target);
 }
 
 // Constructors and destructor
 Character::Character() : _name("Default") {
-	std::cout << BGRN << "[Character] Creating default character" << RESET << std::endl;
+	std::cout << BGRN << "[Character]" << RESET << " Creating default character" << RESET << std::endl;
 	for (int i = 0; i < 4; i++)
 		_inventory[i] = 0;
 }
 
 Character::Character(std::string name) : _name(name) {
-	std::cout << BGRN << "[Character] Creating character named " << name << RESET << std::endl;
+	std::cout << BGRN << "[Character]" << RESET << " Creating character named " << name << RESET << std::endl;
 	for (int i = 0; i < 4; i++)
 		_inventory[i] = 0;
 }
 
 Character::Character(Character const &other) {
-	std::cout << BGRN << "[Character] Calling copy constructor" << RESET << std::endl;
+	std::cout << BGRN << "[Character]" << RESET << " Calling copy constructor" << RESET << std::endl;
 	*this = other;
 }
 
 Character & Character::operator=(Character const &other) {
-	std::cout << GRN << "[Character] Calling copy assignment operator" << RESET << std::endl;
+	std::cout << GRN << "[Character]" << RESET << " Calling copy assignment operator" << RESET << std::endl;
 	if (this != &other) {
 		_name = other._name;
 		for (int i = 0; i < 4; i++)
@@ -68,7 +68,7 @@ Character & Character::operator=(Character const &other) {
 }
 
 Character::~Character() {
-	std::cout << BRED << "[Character] Calling destructor" << RESET << std::endl;
+	std::cout << BRED << "[Character]" << RESET << " Calling destructor" << RESET << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
 		if (_inventory[i])
