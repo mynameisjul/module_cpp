@@ -14,21 +14,21 @@ void			Bureaucrat::incrementGrade() {
 	if (_grade == 1)
 		throw GradeTooHighException();
 	else
-		_grade++;
+		_grade--;
 }
 
 void			Bureaucrat::decrementGrade() {
 	if (_grade == 150)
 		throw GradeTooLowException();
 	else
-		_grade--;
+		_grade++;
 }
 
 // ========== OTHER MEMBER FUNCTIONS
 void		Bureaucrat::signForm(Form &f) const {
 	try {
 		f.beSigned(*this);
-		std::cout << _name << " signed " << f.getName() << std::endl;
+		std::cout << GRN << _name << " signed " << f.getName() << RESET << std::endl;
 	}
 	catch (std::exception const &e) {
 		std::cerr << _name << " couldn't sign " << f.getName() << " because " << e.what() << std::endl;

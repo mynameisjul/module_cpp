@@ -2,14 +2,15 @@
 #define FORM_HPP
 
 #include "bureaucrats.h"
-#include "Bureaucrat.hpp"
+
+class Bureaucrat;
 
 class Form {
 	private:
-		std::string	_name;
-		bool		_signed;
-		int			_sign_grade;
-		int			_exec_grade;
+		std::string		_name;
+		bool			_signed;
+		unsigned int	_sign_grade;
+		unsigned int	_exec_grade;
 	public:
 		// ========== CONSTRUCTORS AND DESTRUCTOR
 		Form(std::string name, int sign_grade, int exec_grade);

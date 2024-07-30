@@ -73,4 +73,5 @@ std::ostream & operator<<(std::ostream &o, Form const & i) {
 		o << "Form name: " << i.getName() << "; status: signed; min grade to sign: " << i.getSignGrade() << "; min grade to execute: " << i.getExecGrade() << ".";
 	if (i.getSigned() == false)
 		o << "Form name: " << i.getName() << "; status: not signed; min grade to sign: " << i.getSignGrade() << "; min grade to execute: " << i.getExecGrade() << ".";
+	return o;
 }
