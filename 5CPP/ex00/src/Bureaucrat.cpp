@@ -14,14 +14,14 @@ void			Bureaucrat::incrementGrade() {
 	if (_grade == 1)
 		throw GradeTooHighException();
 	else
-		_grade++;
+		_grade--;
 }
 
 void			Bureaucrat::decrementGrade() {
 	if (_grade == 150)
 		throw GradeTooLowException();
 	else
-		_grade--;
+		_grade++;
 }
 
 
