@@ -36,7 +36,7 @@ static void	isFloat(const std::string &literal) {
 	
 	char *end;
 	float f = strtof(literal.c_str(), &end);
-	if (*end != 'f' || *(end + 1) == 0)
+	if (*end != 'f' || *(end + 1) != 0)
 		return ;
 	if (errno == ERANGE)
 		return (printType());
