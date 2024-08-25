@@ -1,5 +1,5 @@
 ### PROGRAM NAME ###
-NAME		:= name
+NAME		:= function_template
 
 ### UTILS ###
 CC			:= c++
