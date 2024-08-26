@@ -1,5 +1,5 @@
 ### PROGRAM NAME ###
-NAME		:= name
+NAME		:= array
 
 ### UTILS ###
 CC			:= c++

@@ -12,18 +12,19 @@ template <typename T> class Array {
 		Array();
 		Array(unsigned int n);
 		Array(const Array &other);
-		Array &operator=(const Array &other);
+		const Array &operator=(const Array &other);
 		~Array();
 
 		T &operator[](size_t i) const;
-		size_t size() const;
+		size_t	size() const;
+		void	setter(T elmnt, size_t i);
 
 		class OutOfBoundsException : public std::exception {
 			public:
 				virtual const char* what() const throw();
-		}
+		};
 };
 
-template <typename T>
+#include "Array.tpp"
 
 #endif /* ARRAY_HPP */

@@ -13,19 +13,20 @@ Array<T>::Array() : _value(new T[0]), _len(0) {
 template <typename T>
 Array<T>::Array(unsigned int n) : _value(new T[n]), _len(n) {
 	std::cout << "Calling parameterized constructor" << std::endl;
-	for (int i = 0; i < n; i++) {
-		_value[i] = 0;
+	for (size_t i = 0; i < n; i++) {
+		_value[i] = T();
 	}
 }
 
 template <typename T>
-const Array<T>& Array<T>::Array &operator=(const Array &other) {
-	if (this != other) {
+const Array<T>& Array<T>::operator=(const Array &other) {
+	if (this != &other) {
 		_len = other._len;
-		if (_value)
+		if (_value) {
 			delete [] _value;
+		}
 		_value = new T[_len];
-		for (int i = 0; i < _len; i++) {
+		for (size_t i = 0; i < _len; i++) {
 			_value[i] = other._value[i];
 		}
 	}
@@ -33,9 +34,11 @@ const Array<T>& Array<T>::Array &operator=(const Array &other) {
 }
 
 template <typename T>
-Array<T>::Array(const Array &other) {
+Array<T>::Array(const Array &other) : _value(new T[other._len]), _len(other._len) {
 	std::cout << "Calling copy constructor" << std::endl;
-	*this = other;
+	for (size_t i = 0; i < _len; i++) {
+		_value[i] = other._value[i];
+	}
 }
 
 template <typename T>
@@ -55,6 +58,15 @@ T & Array<T>::operator[](size_t i) const {
 template <typename T>
 size_t Array<T>::size() const {
 	return _len;
+}
+
+template <typename T>
+void Array<T>::setter(T elmnt, size_t i) {
+	if (i >= _len)
+		throw OutOfBoundsException();
+	else  {
+		_value[i] = elmnt;
+	}
 }
 
 template <typename T>
