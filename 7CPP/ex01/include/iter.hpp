@@ -4,10 +4,11 @@
 #include <string>
 #include <iostream>
 
-template <typename T, typename L, typename F>void iter(T *adr, L length, F f) {
-	if (adr == NULL || f == NULL || length < 0)
+template <typename T>
+void iter(T *adr, size_t len, void (*f)(T)) {
+	if (adr == NULL || f == NULL || len < 0)
 		return ;
-	for (L i = 0; i < length; i++) {
+	for (size_t i = 0; i < len; i++) {
 		f(adr[i]);
 	}
 }
