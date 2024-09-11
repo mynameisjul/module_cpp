@@ -2,10 +2,25 @@
 #include <cstdlib>
 #include "Span.hpp"
 
+int	custom_rand() {
+	int a = std::rand();
+	int b = std::rand();
+
+	if (a % 2 == 0)
+		return (b % 1000);
+	else 
+		return (-b % 1000);
+}
+
 // CONSTRUCTORS DESTRUCTOR
 Span::Span(size_t N) : _N(N) {
 	std::cout << "Calling constructor" << std::endl;
-	_arr.reserve(N);
+	try {
+		_arr.reserve(N); 
+	}
+	catch (std::exception const &) {
+		throw InvalidSize();
+	}
 }
 
 Span::Span(const Span &other) : _N(other._N) {
@@ -30,8 +45,11 @@ Span & Span::operator=(const Span &other) {
 
 // GETTERS AND SETTERS
 void	Span::fill() {
+	if (_N < 1)
+		throw InvalidSize();
+	_arr.resize(_N);
 	std::srand(time(0));
-    std::generate(_arr.begin(), _arr.end(), std::rand);
+    std::generate(_arr.begin(), _arr.end(), custom_rand);
 }
 
 void	Span::addNumber(int n) {
@@ -44,7 +62,7 @@ void	Span::addNumber(int n) {
 };
 
 size_t Span::getSize() const {
-	return (_arr.size());
+	return (_N);
 }
 
 int	Span::getElement(size_t i) const {
@@ -55,12 +73,10 @@ int	Span::getElement(size_t i) const {
 
 // SPECIFIC MEMBERS
 size_t	Span::shortestSpan() {
-	if (_arr.size() < 2)
+	if (_N < 1 || _arr.size() < 2)
 		throw NoSpanFound();
-
 	std::sort(_arr.begin(), _arr.end());
 	size_t shortestSpan = 4294967296;
-	std::cout << shortestSpan << std::endl;
 	for (size_t i = 0; i < _arr.size() - 1; i++) {
 		if ((size_t) abs(_arr[i] - _arr[i + 1]) < shortestSpan)
 			shortestSpan = (size_t) abs(_arr[i] - _arr[i + 1]); 
@@ -69,7 +85,7 @@ size_t	Span::shortestSpan() {
 }
 
 size_t	Span::longestSpan() const {
-	if (_arr.size() < 2)
+	if (_N < 1 || _arr.size() < 2)
 		throw NoSpanFound();
 	
 	int min = *std::min_element(_arr.begin(), _arr.end());
@@ -89,6 +105,10 @@ const char *Span::NoSpanFound::what() const throw() {
 
 const char *Span::OutOfBound::what() const throw() {
 	return "Could not access element: index is out of bound";
+}
+
+const char *Span::InvalidSize::what() const throw() {
+	return "Size is invalid";
 }
 
 std::ostream &operator<<(std::ostream & o, Span const &s) {

@@ -26,7 +26,7 @@ class Span {
 		size_t	longestSpan() const;
 
 		// EXCEPTION CLASS
-		class ArrayFull : std::exception {
+		class ArrayFull : public std::exception {
 			public:
 				virtual const char *what() const throw();
 		};
@@ -34,12 +34,18 @@ class Span {
 			public:
 				virtual const char *what() const throw();
 		};
-		class OutOfBound : std::exception {
+		class OutOfBound : public std::exception {
+			public:
+				virtual const char *what() const throw();
+		};
+		class InvalidSize : public std::exception {
 			public:
 				virtual const char *what() const throw();
 		};
 };
 
 std::ostream &operator<<(std::ostream & o, Span const & s);
+
+int	custom_rand();
 
 #endif /* SPAN_HPP */
