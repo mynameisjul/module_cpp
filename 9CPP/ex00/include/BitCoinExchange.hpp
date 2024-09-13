@@ -1,27 +1,30 @@
 #pragma once
 
 #include <iostream>
+#include <stdlib.h>
 #include <fstream>
+#include <cstdlib>
 #include <string>
 #include <map>
+#include <time.h>
 
 
 class BitCoinExchange {
 	private:
 		std::ifstream				ref_file;
-		std::ifstream				input_file;
-		std::map<time_t, double>	ref_map;
+		std::map<std::string, double>	ref_map;
 		void	isValidFileName(std::string name); // checks name validity
+		void	openRefFile(); //tries to open file
 		bool	isValidDate(std::string date); // checks date validity
-		time_t	stringToKey(std::string date);
-		bool	isValidValue(std::string value); // checks value validity
-		void	fileToMap(std::string input_file);
+		int		isValidValue(std::string value, bool isRate); // checks value validity
+		void	fileToMap();
 	public:
 		BitCoinExchange();
 		BitCoinExchange(BitCoinExchange const &other);
 		BitCoinExchange &operator=(BitCoinExchange const &other);
-		void	inputToOutput(std::string input_file);
-		void	openFile(std::string name); //tries to open file
+		~BitCoinExchange();
+
+		void	inputToOutput(std::ifstream &input_file);
 
 		class CouldNotOpenFile : public std::exception {
 			virtual const char *what() const throw() {
@@ -34,4 +37,7 @@ class BitCoinExchange {
 				return "Invalid file name";
 			}
 		};
+
+		// DEBUG HELPERS
+		void printMap();
 };
