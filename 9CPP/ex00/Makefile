@@ -17,7 +17,7 @@ INCLD_DIR 	:= include
 OBJS_DIR 	:= objs
 
 ### FILES ###
-SRC 		:=	main.cpp
+SRC 		:=	main.cpp BitCoinExchange.cpp
 INCLUDES	:=	$(INCLD_DIR)
 INCLD_FLAG 	:= 	$(addprefix -I , $(INCLUDES))
 OBJS 		:= 	$(patsubst %.cpp,$(OBJS_DIR)/%.o,$(SRC))
