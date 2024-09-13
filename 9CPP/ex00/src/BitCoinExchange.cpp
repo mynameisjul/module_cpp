@@ -1,21 +1,18 @@
 #include "BitCoinExchange.hpp"
 
 // HELPERS
-void	BitCoinExchange::openFile(std::string name) {
-	try {
-		ref_file.open(name.c_str());
-	}
-	catch (std::exception const &e) {
-		throw (CouldNotOpenFile());
-	}
-} 
-
 void	BitCoinExchange::isValidFileName(std::string name) {
 	if (name.find(".") != name.rfind("."))
 		throw (InvalidFileName());
 	if (name.find(".csv", name.size() - 4) == std::string::npos)
 		throw(InvalidFileName());
-} 
+}
+
+void	BitCoinExchange::openFile(std::string name) {
+	ref_file.open(name.c_str());
+	if (ref_file.fail())
+		throw (CouldNotOpenFile());
+}
 
 bool	BitCoinExchange::isValidDate(std::string date) {
 	(void) date;

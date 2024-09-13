@@ -11,7 +11,7 @@ class BitCoinExchange {
 		std::ifstream				ref_file;
 		std::ifstream				input_file;
 		std::map<time_t, double>	ref_map;
-		void	openFile(std::string name); //tries to open file
+		void	isValidFileName(std::string name); // checks name validity
 		bool	isValidDate(std::string date); // checks date validity
 		time_t	stringToKey(std::string date);
 		bool	isValidValue(std::string value); // checks value validity
@@ -20,8 +20,8 @@ class BitCoinExchange {
 		BitCoinExchange();
 		BitCoinExchange(BitCoinExchange const &other);
 		BitCoinExchange &operator=(BitCoinExchange const &other);
-		void	isValidFileName(std::string name); // checks name validity
 		void	inputToOutput(std::string input_file);
+		void	openFile(std::string name); //tries to open file
 
 		class CouldNotOpenFile : public std::exception {
 			virtual const char *what() const throw() {
