@@ -7,7 +7,7 @@ bool isValidArray(char **av) {
 
 		value = strtoul(av[i], &end, 10);
 
-		if (errno == ERANGE || value > UINT32_MAX) {
+		if (errno == ERANGE || value > 4294967295) {
 			return false;
 		}
 
@@ -36,7 +36,13 @@ int main(int ac, char **av) {
 
 	{	// VECTOR
 		try {
-			PmergeMe(vec);
+			PmergeMe<std::vector<unsigned int> >	pm(vec, true);
+			pm.displaySorted(&av[1]);
+
+		}
+		catch (std::exception &e) {
+			std::cerr << "Error: " << e.what() << std::endl;
+			return 1;
 		}
 	}
 
