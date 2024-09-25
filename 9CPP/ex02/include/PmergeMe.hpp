@@ -191,20 +191,24 @@ void PmergeMe<T>::jacobsthalInsertionSort() {
 
 	if (_isVec)
 		S.reserve(_arr.size() + 1);
+	std::cerr << "AAA" << std::endl;
 	S.push_back(_arr[0]);
 	S.push_back(_arr[1]);
 
+	std::cerr << "BBB" << std::endl;
 	size_t pairIndex = 2;
 	size_t pairIndexMax = _arr.size() / 2;
 	size_t jacIndex = 1;
 	while (pairIndexMax >= jacobVec[jacIndex]) 
 	{
+		std::cerr << "CCC" << std::endl;
 		size_t bIndex = (pairIndex * 2) - 1;
 		while (bIndex <= jacobVec[jacIndex] * 2 - 1) {
 			S.push_back(_arr[bIndex]);
 			bIndex += 2;
 		}
 
+		std::cerr << "DDD" << std::endl;
 		size_t aIndex = (jacobVec[jacIndex] - 1) * 2;
 		while (aIndex > (jacobVec[jacIndex - 1] - 1) * 2) {
 			binaryInsert(S, _arr[aIndex], std::find(S.begin(), S.end(), _arr[aIndex + 1]));
@@ -215,19 +219,30 @@ void PmergeMe<T>::jacobsthalInsertionSort() {
 		jacIndex++;
 	}
 
+	std::cerr << "EEE" << std::endl;
 	while (pairIndex <= _arr.size() / 2) {
+		std::cerr << "FFF" << std::endl;
 		size_t bIndex = (pairIndex * 2) - 1;
 		while (bIndex < _arr.size()) {
+		std::cerr << "GGG" << std::endl;
 			S.push_back(_arr[bIndex]);
 			bIndex += 2;
 		}
 
+		std::cerr << "HHH" << std::endl;
 		size_t aIndex = (pairIndex - 1) * 2;
 		while (aIndex < _arr.size()) {
+		std::cerr << "UUU" << std::endl;
 			binaryInsert(S, _arr[aIndex], std::find(S.begin(), S.end(), _arr[aIndex + 1]));
+			aIndex += 2;
 		}
+
+		pairIndex++;
 	}
+
+	std::cerr << "ici ??" << std::endl;
 	_arr = S;
+	std::cerr << "la ??" << std::endl;
 }
 
 // CORE FUNCTION
@@ -246,7 +261,7 @@ void	PmergeMe<T>::displaySorted(char **av) {
 		mergeSortPairSequence();
 		std::cout << "After merge sort pairs = " << *this << std::endl; // DEBUG
 		jacobsthalInsertionSort();
-		std::cout << "After the Jacobsthal sort = " << *this << std::endl; // DEBUG
+		//std::cout << "After the Jacobsthal sort = " << *this << std::endl; // DEBUG
 	}
 	catch (std::exception &e) {
 		std::cerr << "Error: " << e.what() << std::endl;
