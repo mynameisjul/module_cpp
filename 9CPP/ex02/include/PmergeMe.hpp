@@ -11,26 +11,28 @@
 template <typename T>
 class PmergeMe {
 	private:
+		T				_arr;
 		bool			_isVec;
 		bool			_odd;
 		unsigned int	_straggler;
-		T				_arr;
 		std::deque<unsigned int> jacobVec; 
 
 		// HELPER FUNCTIONS
-		void	initJacobVec();
-		void	buildArray(char **arr);
-		bool	isSorted();
-		void	isOdd();
-		void	sortPairs();
-		T		mergePairSort(T arr);
-		void	mergeSortPairSequence();
-		void	binaryInsert(T &S, size_t i);
-		void	jacobsthalInsertionSort();
+		void		initJacobVec();
+		void		buildArray(char **arr);
+		bool		isSorted();
+		void		isOdd();
+		void		sortPairs();
+		T			mergePairSort(T arr);
+		void		mergeSortPairSequence();
+		void		binaryInsert(T &S, unsigned int n, typename T::iterator pos_pair);
+		void		jacobsthalInsertionSort();
 		//void	insertStraggler();
 		PmergeMe() {}
 
 	public:
+		// PUBLIC TYPES
+		typedef typename T::iterator Iterator;
 		// DEBUG HELPER
 		void	printArr(std::ostream & o) const;
 
@@ -66,10 +68,9 @@ class PmergeMe {
 
 template <typename T>
 void	PmergeMe<T>::initJacobVec() {
-	unsigned long un = 0;
+	unsigned long un = 1;
 	unsigned long unn = 1;
 
-	jacobVec.push_back(un);
 	jacobVec.push_back(unn);
 	while (unn <= 1431655765) {
 		unsigned int tmp = 2 * un + unn;
@@ -170,22 +171,63 @@ void PmergeMe<T>::mergeSortPairSequence() {
 }
 
 template <typename T>
-void PmergeMe<T>::binaryInsert(T &S, size_t i) {
+void PmergeMe<T>::binaryInsert(T &S, unsigned int n, typename T::iterator pos_pair) {
+	size_t	left = 0;
+	size_t	right = pos_pair - S.begin();
 	
+	while (left <= right) {
+		size_t mid = left + right / 2;
+		if (n > S[mid])
+			left = mid + 1;
+		else
+			right = mid - 1;
+	}
+	S.insert(S.begin() + left, n);
 }
 
 template <typename T>
 void PmergeMe<T>::jacobsthalInsertionSort() {
-T S;
-unsigned int jacobIndex = 3;
+	T S;
 
-if (isVec)
-	S.reserve(_arr.size() + 1);
-S.push_back(_arr[0])
-for (size_t i = 1; i < _arr.size(); i += 2) {
-	S.push_back(_arr[i]);
+	if (_isVec)
+		S.reserve(_arr.size() + 1);
+	S.push_back(_arr[0]);
+	S.push_back(_arr[1]);
+
+	size_t pairIndex = 2;
+	size_t pairIndexMax = _arr.size() / 2;
+	size_t jacIndex = 1;
+	while (pairIndexMax >= jacobVec[jacIndex]) 
+	{
+		size_t bIndex = (pairIndex * 2) - 1;
+		while (bIndex <= jacobVec[jacIndex] * 2 - 1) {
+			S.push_back(_arr[bIndex]);
+			bIndex += 2;
+		}
+
+		size_t aIndex = (jacobVec[jacIndex] - 1) * 2;
+		while (aIndex > (jacobVec[jacIndex - 1] - 1) * 2) {
+			binaryInsert(S, _arr[aIndex], std::find(S.begin(), S.end(), _arr[aIndex + 1]));
+			aIndex-=2;
+		}
+
+		pairIndex = jacobVec[jacIndex] + 1;
+		jacIndex++;
 	}
 
+	while (pairIndex <= _arr.size() / 2) {
+		size_t bIndex = (pairIndex * 2) - 1;
+		while (bIndex < _arr.size()) {
+			S.push_back(_arr[bIndex]);
+			bIndex += 2;
+		}
+
+		size_t aIndex = (pairIndex - 1) * 2;
+		while (aIndex < _arr.size()) {
+			binaryInsert(S, _arr[aIndex], std::find(S.begin(), S.end(), _arr[aIndex + 1]));
+		}
+	}
+	_arr = S;
 }
 
 // CORE FUNCTION
@@ -203,6 +245,8 @@ void	PmergeMe<T>::displaySorted(char **av) {
 		std::cout << "After sort pairs = " << *this << std::endl; // DEBUG
 		mergeSortPairSequence();
 		std::cout << "After merge sort pairs = " << *this << std::endl; // DEBUG
+		jacobsthalInsertionSort();
+		std::cout << "After the Jacobsthal sort = " << *this << std::endl; // DEBUG
 	}
 	catch (std::exception &e) {
 		std::cerr << "Error: " << e.what() << std::endl;
