@@ -23,8 +23,8 @@ class PmergeMe {
 		bool		isSorted();
 		void		isOdd();
 		void		sortPairs();
-		T			mergePairSort(T arr);
-		void		mergeSortPairSequence();
+		void		mergePair(T arr, int p, int q, int r);
+		void		mergeSortPair(T arr, int l, int r);
 		void		binaryInsert(T &S, unsigned int n, typename T::iterator pos_pair);
 		T		jacobsthalInsertionSort();
 		//void	insertStraggler();
@@ -124,50 +124,57 @@ void	PmergeMe<T>::sortPairs() {
 }
 
 template <typename T>
-T	PmergeMe<T>::mergePairSort(T arr) {
-	if (arr.size() > 2) {
-		int mid = arr.size() / 2;
-		T	left(arr.begin(), arr.begin() + mid);
-		T	right(arr.begin() + mid, arr.end());
+void	PmergeMe<T>::mergePair(T arr, int p,  int q, int r) {
+	int n1 = q - p + 1;
+	int n2 = r - q;
 
-		left = mergePairSort(left);
-		right = mergePairSort(right);
+	T L(n1);
+	T M(n2);
 
-		size_t i = 0;
-		size_t j = 0;
-		size_t k = 0;
-		while (i < left.size() && j < right.size()) {
-			if (left[i + 1] < right[j + 1]) {
-				arr[k] = left[i];
-				arr[k + 1] = left[i + 1];
-				i += 2;
-			}
-			else {
-				arr[k] = right[j];
-				arr[k + 1] = right[j + 1];
-				j += 2;
-			}
-			k += 2;
+	for (int i = 0; i < n1; i++)
+		L[i] = arr[p + i];
+	
+	for (int j = 0; j < n2; j++)
+		M[j] = arr[q + 1 + j];
+
+	int i = 1, j = 1, k = p;
+
+	while (i < n1 && j < n2) {
+		if (L[i] <= M[j]) {
+			arr[k] = L[i - 1];
+			arr[k + 1] = L[i];
+			i += 2;
 		}
-
-		while (i < left.size()) {
-			arr[k] = left[i];
-			k++;
-			i++;
+		else {
+			arr[k] = M[j - 1];
+			arr[k + 1] = M[j];
+			j += 2;
 		}
-
-		while (j < right.size()) {
-			arr[k] = right[j];
-			k++;
-			j++;
-		}
+		k += 2;
 	}
-	return arr;
+
+	while (i < n1) {
+		arr[k] = L[i];
+		i++;
+		k++;
+	}
+
+	while (j < n2) {
+		arr[k] = M[j];
+		j++;
+		k++;
+	}
 }
 
 template <typename T>
-void PmergeMe<T>::mergeSortPairSequence() {
-	_arr = mergePairSort(_arr);
+void PmergeMe<T>::mergeSortPair(T arr, int l, int r) {
+	if (l < r) {
+		int m = l + (r - l) / 2;
+
+		mergeSortPair(arr, l, m);
+		mergeSortPair(arr, m + 1, r);
+		mergePair(arr, l, m, r);
+	}
 }
 
 template <typename T>
@@ -246,14 +253,15 @@ void	PmergeMe<T>::displaySorted(char **av) {
 		}
 		isOdd();
 		sortPairs();
-		std::cout << "After sort pairs = " << *this << std::endl; // DEBUG
-		mergeSortPairSequence();
-		std::cout << "After merge sort pairs = " << *this << std::endl; // DEBUG
-		T new_arr = jacobsthalInsertionSort();
-		for (size_t i = 0; i < new_arr.size(); i++) {
-			std::cout << new_arr[i] << " ";
-		}
+		std::cout << "After sort pairs yoyo = " << *this << std::endl; // DEBUG
 		std::cout << std::endl;
+		mergeSortPair(_arr, 0, _arr.size() - 1);
+		std::cout << "After merge sort pairs = " << *this << std::endl; // DEBUG
+		// T new_arr = jacobsthalInsertionSort();
+		// for (size_t i = 0; i < new_arr.size(); i++) {
+		// 	std::cout << new_arr[i] << " ";
+		// }
+		// std::cout << std::endl;
 	}
 	catch (std::exception &e) {
 		std::cerr << "Error: " << e.what() << std::endl;
@@ -272,6 +280,8 @@ template <typename T>
 void	PmergeMe<T>::printArr(std::ostream & o) const {
 	for (size_t i = 0; i < _arr.size(); i++) {
 		o << _arr[i] << " ";
+		if (i % 2 == 1)
+			o << "| ";
 	}
 }
 
