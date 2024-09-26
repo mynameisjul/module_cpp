@@ -3,7 +3,7 @@ NAME		:= name
 
 ### UTILS ###
 CC			:= c++
-CPPFLAGS		:= -Wall -Wextra -Werror -std=c++98
+CPPFLAGS		:= -g3 -Wall -Wextra -Werror -std=c++98
 DEP_FLAGS	:= -MMD -MP
 MAKE_FLAG	:= --no-print-directory --silent
 RM			:= rm -rf

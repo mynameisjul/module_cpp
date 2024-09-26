@@ -47,6 +47,14 @@ int main(int ac, char **av) {
 	}
 
 	{	// DEQUE
+		try {
+			PmergeMe<std::deque<unsigned int> >	pm(deq, false);
+			pm.displaySorted(&av[1]);
 
+		}
+		catch (std::exception &e) {
+			std::cerr << "Error: " << e.what() << std::endl;
+			return 1;
+		}
 	}
 }
