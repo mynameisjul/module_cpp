@@ -2,9 +2,10 @@
 #include <cstdlib>  // For rand() and srand()
 #include <ctime>    // For time()
 #include <algorithm>  // For std::swap
+#include <stdlib.h>
 
-int main() {
-    const int N = 100;  // Change this to the number of unique numbers you want
+int main(int ac, char **av) {
+    const int N = atoi(av[1]);  // Change this to the number of unique numbers you want
     int numbers[N];
 
     // Initialize the array with values from 1 to N

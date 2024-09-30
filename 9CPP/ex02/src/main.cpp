@@ -30,25 +30,16 @@ int main(int ac, char **av) {
 	}
 
 	std::vector<unsigned int> vec;
+	std::vector<std::pair<unsigned int, unsigned int> > pvec;
 	std::deque<unsigned int> deq;
+	std::deque<std::pair<unsigned int, unsigned int> > pdeq;
 
 	vec.reserve(ac - 1);
+	pvec.reserve((ac - 1) / 2);
 
-	{	// VECTOR
-		try {
-			PmergeMe<std::vector<unsigned int> >	pm(vec, true);
-			pm.displaySorted(&av[1]);
-
-		}
-		catch (std::exception &e) {
-			std::cerr << "Error: " << e.what() << std::endl;
-			return 1;
-		}
-	}
-
-	// {	// DEQUE
+	// {	// VECTOR
 	// 	try {
-	// 		PmergeMe<std::deque<unsigned int> >	pm(deq, false);
+	// 		PmergeMe<std::vector<unsigned int>, std::vector<std::pair<unsigned int, unsigned int> > >	pm(vec, pvec, true);
 	// 		pm.displaySorted(&av[1]);
 
 	// 	}
@@ -57,4 +48,16 @@ int main(int ac, char **av) {
 	// 		return 1;
 	// 	}
 	// }
+
+	{	// DEQUE
+		try {
+			PmergeMe<std::deque<unsigned int>, std::deque<std::pair<unsigned int, unsigned int> > >	pm(deq, pdeq, false);
+			pm.displaySorted(&av[1]);
+
+		}
+		catch (std::exception &e) {
+			std::cerr << "Error: " << e.what() << std::endl;
+			return 1;
+		}
+	}
 }

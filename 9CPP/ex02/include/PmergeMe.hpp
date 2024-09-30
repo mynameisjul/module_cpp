@@ -8,10 +8,11 @@
 #include <vector>
 //#include "PmergeMe.tpp"
 
-template <typename T>
+template <typename T, typename P>
 class PmergeMe {
 	private:
 		T				_arr;
+		P				_parr;
 		bool			_isVec;
 		bool			_odd;
 		unsigned int	_straggler;
@@ -23,8 +24,8 @@ class PmergeMe {
 		bool		isSorted();
 		void		isOdd();
 		void		sortPairs();
-		void		mergePair(T arr, int p, int q, int r);
-		void		mergeSortPair(T arr, int l, int r);
+		void		mergePair(P &arr, int p, int q, int r);
+		void		mergeSortPair(P &arr, int l, int r);
 		void		binaryInsert(T &S, unsigned int n, typename T::iterator pos_pair);
 		T		jacobsthalInsertionSort();
 		//void	insertStraggler();
@@ -35,20 +36,22 @@ class PmergeMe {
 		typedef typename T::iterator Iterator;
 		// DEBUG HELPER
 		void	printArr(std::ostream & o) const;
+		void	printPairArr(std::ostream &o) const;
 
 		// CORE FUNCTION
 		void	displaySorted(char **av);
 
 		// CONSTRUCTORS AND DESTRUCTOR
-		PmergeMe(const T &array, bool isVec) : _arr(array), _isVec(isVec) {
+		PmergeMe(const T &array, const P&parr, bool isVec) : _arr(array), _parr(parr), _isVec(isVec) {
 			initJacobVec();
 		}
-		PmergeMe(const PmergeMe<T> &other) {
+		PmergeMe(const PmergeMe<T, P> &other) {
 				*this = other;
 		}
-		PmergeMe<T> &operator=(const PmergeMe<T> &other) {
+		PmergeMe<T, P> &operator=(const PmergeMe<T, P> &other) {
 			if (this != &other) {
 				_arr = other._arr;
+				_parr = other._parr;
 				_odd = other._odd;
 				_straggler = other._straggler;
 				_isVec = other._isVec;
@@ -66,8 +69,8 @@ class PmergeMe {
 
 // HELPER FUNCTIONS
 
-template <typename T>
-void	PmergeMe<T>::initJacobVec() {
+template <typename T, typename P>
+void	PmergeMe<T, P>::initJacobVec() {
 	unsigned long un = 1;
 	unsigned long unn = 1;
 
@@ -80,8 +83,8 @@ void	PmergeMe<T>::initJacobVec() {
 	}
 }
 
-template <typename T>
-void	PmergeMe<T>::buildArray(char **av) {
+template <typename T, typename P>
+void	PmergeMe<T, P>::buildArray(char **av) {
 	for (size_t i = 0; av[i]; i++) {
 		unsigned int	value;
 
@@ -92,8 +95,8 @@ void	PmergeMe<T>::buildArray(char **av) {
 	}
 }
 
-template <typename T>
-bool	PmergeMe<T>::isSorted() {
+template <typename T, typename P>
+bool	PmergeMe<T, P>::isSorted() {
 	for (size_t i = 1; i < _arr.size(); i++) {
 		if (_arr[i] < _arr[i - 1])
 			return false;
@@ -101,8 +104,8 @@ bool	PmergeMe<T>::isSorted() {
 	return true;
 }
 
-template <typename T>
-void	PmergeMe<T>::isOdd() {
+template <typename T, typename P>
+void	PmergeMe<T, P>::isOdd() {
 	if (_arr.size() % 2 == 1) {
 		_straggler = _arr.back();
 		_odd = true;
@@ -112,45 +115,48 @@ void	PmergeMe<T>::isOdd() {
 		_odd = false;
 }
 
-template <typename T> 
-void	PmergeMe<T>::sortPairs() {
+template <typename T, typename P> 
+void	PmergeMe<T, P>::sortPairs() {
 	for (size_t i = 0; i < _arr.size() - 1; i += 2) {
-		if (_arr[i] > _arr[i + 1]) {
-			unsigned int tmp = _arr[i];
-			_arr[i] = _arr[i + 1];
-			_arr[i + 1] = tmp;
-		}
+		if (_arr[i] > _arr[i + 1])
+			_parr.push_back(std::make_pair(_arr[i + 1], _arr[i]));
+		else
+			_parr.push_back(std::make_pair(_arr[i], _arr[i + 1]));
 	}
 }
 
-template <typename T>
-void	PmergeMe<T>::mergePair(T arr, int p,  int q, int r) {
+template <typename T, typename P>
+void	PmergeMe<T, P>::mergePair(P &arr, int p,  int q, int r) {
 	int n1 = q - p + 1;
 	int n2 = r - q;
 
-	T L(n1);
-	T M(n2);
+	P L;
+	P M;
 
-	for (int i = 0; i < n1; i++)
-		L[i] = arr[p + i];
+	std::cout << "PRINT L = ";
+	for (int i = 0; i < n1; i++) {
+		L.push_back(arr[p + i]);
+		std::cout << L[i].first << " " << L[i].second << " | "; }
+	std::cout << std::endl;
 	
-	for (int j = 0; j < n2; j++)
-		M[j] = arr[q + 1 + j];
+	std::cout << "PRINT M = ";
+	for (int j = 0; j < n2; j++) {
+		M.push_back(arr[q + 1 + j]);
+		std::cout << M[j].first << " " << M[j].second << " | " ; }
+	std::cout << std::endl;
 
-	int i = 1, j = 1, k = p;
+	int i = 0, j = 0, k = p;
 
 	while (i < n1 && j < n2) {
-		if (L[i] <= M[j]) {
-			arr[k] = L[i - 1];
-			arr[k + 1] = L[i];
-			i += 2;
+		if (L[i].second <= M[j].second) {
+			arr[k] = L[i];
+			i++;
 		}
 		else {
-			arr[k] = M[j - 1];
-			arr[k + 1] = M[j];
-			j += 2;
+			arr[k] = M[j];
+			j ++;
 		}
-		k += 2;
+		k ++;
 	}
 
 	while (i < n1) {
@@ -166,19 +172,20 @@ void	PmergeMe<T>::mergePair(T arr, int p,  int q, int r) {
 	}
 }
 
-template <typename T>
-void PmergeMe<T>::mergeSortPair(T arr, int l, int r) {
-	if (l < r) {
-		int m = l + (r - l) / 2;
+template <typename T, typename P>
+void PmergeMe<T, P>::mergeSortPair(P &arr, int l, int r) {
+	if (l >= r)
+		return;
 
-		mergeSortPair(arr, l, m);
-		mergeSortPair(arr, m + 1, r);
-		mergePair(arr, l, m, r);
-	}
+	int m = l + (r - l) / 2;
+
+	mergeSortPair(arr, l, m);
+	mergeSortPair(arr, m + 1, r);
+	mergePair(arr, l, m, r);
 }
 
-template <typename T>
-void PmergeMe<T>::binaryInsert(T &S, unsigned int n, typename T::iterator pos_pair) {
+template <typename T, typename P>
+void PmergeMe<T, P>::binaryInsert(T &S, unsigned int n, typename T::iterator pos_pair) {
 	size_t	left = 0;
 	size_t	right = pos_pair - S.begin();
 	
@@ -192,8 +199,8 @@ void PmergeMe<T>::binaryInsert(T &S, unsigned int n, typename T::iterator pos_pa
 	S.insert(S.begin() + left, n);
 }
 
-template <typename T>
-T PmergeMe<T>::jacobsthalInsertionSort() {
+template <typename T, typename P>
+T PmergeMe<T, P>::jacobsthalInsertionSort() {
 	T S;
 
 	// if (_isVec == true)
@@ -242,8 +249,8 @@ T PmergeMe<T>::jacobsthalInsertionSort() {
 }
 
 // CORE FUNCTION
-template <typename T>
-void	PmergeMe<T>::displaySorted(char **av) {
+template <typename T, typename P>
+void	PmergeMe<T, P>::displaySorted(char **av) {
 	try {
 		buildArray(av);
 		if (isSorted()) {
@@ -253,10 +260,14 @@ void	PmergeMe<T>::displaySorted(char **av) {
 		}
 		isOdd();
 		sortPairs();
-		std::cout << "After sort pairs yoyo = " << *this << std::endl; // DEBUG
+		std::cout << "After sort pairs yoyo = ";
+		printPairArr(std::cout);
+		std::cout << std::endl; // DEBUG
 		std::cout << std::endl;
-		mergeSortPair(_arr, 0, _arr.size() - 1);
-		std::cout << "After merge sort pairs = " << *this << std::endl; // DEBUG
+		mergeSortPair(_parr, 0, _parr.size() - 1);
+		std::cout << "After merge sort pairs = "; 
+		printPairArr(std::cout);
+		std::cout << std::endl; // DEBUG
 		// T new_arr = jacobsthalInsertionSort();
 		// for (size_t i = 0; i < new_arr.size(); i++) {
 		// 	std::cout << new_arr[i] << " ";
@@ -270,14 +281,14 @@ void	PmergeMe<T>::displaySorted(char **av) {
 }
 
 // EXCEPTION CLASS
-template <typename T>
-const char 	*PmergeMe<T>::DuplicateValue::what() const throw() {
+template <typename T, typename P>
+const char 	*PmergeMe<T, P>::DuplicateValue::what() const throw() {
 	return "Duplicate value detected";
 }
 
 // DEBUG HELPER
-template <typename T>
-void	PmergeMe<T>::printArr(std::ostream & o) const {
+template <typename T, typename P>
+void	PmergeMe<T, P>::printArr(std::ostream & o) const {
 	for (size_t i = 0; i < _arr.size(); i++) {
 		o << _arr[i] << " ";
 		if (i % 2 == 1)
@@ -285,8 +296,15 @@ void	PmergeMe<T>::printArr(std::ostream & o) const {
 	}
 }
 
-template <typename T>
-std::ostream & operator<<(std::ostream & o, PmergeMe<T> const &i) {
+template <typename T, typename P>
+void	PmergeMe<T, P>::printPairArr(std::ostream &o) const {
+	for (size_t i = 0; i < _parr.size(); i++) {
+		o << _parr[i].first << " " << _parr[i].second << " | ";
+	}
+}
+
+template <typename T, typename P>
+std::ostream & operator<<(std::ostream & o, PmergeMe<T, P> const &i) {
 	i.printArr(o);
 	return o;
 }
