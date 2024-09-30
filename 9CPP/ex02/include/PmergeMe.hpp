@@ -20,14 +20,15 @@ class PmergeMe {
 
 		// HELPER FUNCTIONS
 		void		initJacobVec();
-		void		buildArray(char **arr);
-		bool		isSorted();
+		void		buildArray(int ac, char **arr);
+		bool		isSorted(T &arr);
+		bool		isSortedPair(P &parr);
 		void		isOdd();
 		void		sortPairs();
 		void		mergePair(P &arr, int p, int q, int r);
 		void		mergeSortPair(P &arr, int l, int r);
 		void		binaryInsert(T &S, unsigned int n, typename T::iterator pos_pair);
-		T		jacobsthalInsertionSort();
+		T			jacobsthalInsertionSort();
 		//void	insertStraggler();
 		PmergeMe() {}
 
@@ -39,7 +40,7 @@ class PmergeMe {
 		void	printPairArr(std::ostream &o) const;
 
 		// CORE FUNCTION
-		void	displaySorted(char **av);
+		void	displaySorted(int ac, char **av);
 
 		// CONSTRUCTORS AND DESTRUCTOR
 		PmergeMe(const T &array, const P&parr, bool isVec) : _arr(array), _parr(parr), _isVec(isVec) {
@@ -84,8 +85,8 @@ void	PmergeMe<T, P>::initJacobVec() {
 }
 
 template <typename T, typename P>
-void	PmergeMe<T, P>::buildArray(char **av) {
-	for (size_t i = 0; av[i]; i++) {
+void	PmergeMe<T, P>::buildArray(int ac, char **av) {
+	for (size_t i = 0; i < (size_t) ac; i++) {
 		unsigned int	value;
 
 		value = strtoul(av[i], NULL, 10);
@@ -96,13 +97,25 @@ void	PmergeMe<T, P>::buildArray(char **av) {
 }
 
 template <typename T, typename P>
-bool	PmergeMe<T, P>::isSorted() {
-	for (size_t i = 1; i < _arr.size(); i++) {
-		if (_arr[i] < _arr[i - 1])
+bool	PmergeMe<T, P>::isSorted(T &arr) {
+	for (size_t i = 1; i < arr.size(); i++) {
+		if (arr[i] < arr[i - 1])
 			return false;
 	}
 	return true;
 }
+
+template <typename T, typename P>
+bool	PmergeMe<T, P>::isSortedPair(P &parr) {
+	for (size_t i = 0; i < parr.size() - 1; i++) {
+		if (parr[i].second < parr[i].first)
+			return false;
+		if (i > 1 && parr[i].first < parr[i - 1].second)
+			return false;
+	}
+	return true;
+}
+
 
 template <typename T, typename P>
 void	PmergeMe<T, P>::isOdd() {
@@ -133,17 +146,11 @@ void	PmergeMe<T, P>::mergePair(P &arr, int p,  int q, int r) {
 	P L;
 	P M;
 
-	std::cout << "PRINT L = ";
-	for (int i = 0; i < n1; i++) {
+	for (int i = 0; i < n1; i++)
 		L.push_back(arr[p + i]);
-		std::cout << L[i].first << " " << L[i].second << " | "; }
-	std::cout << std::endl;
-	
-	std::cout << "PRINT M = ";
-	for (int j = 0; j < n2; j++) {
+
+	for (int j = 0; j < n2; j++)
 		M.push_back(arr[q + 1 + j]);
-		std::cout << M[j].first << " " << M[j].second << " | " ; }
-	std::cout << std::endl;
 
 	int i = 0, j = 0, k = p;
 
@@ -187,10 +194,20 @@ void PmergeMe<T, P>::mergeSortPair(P &arr, int l, int r) {
 template <typename T, typename P>
 void PmergeMe<T, P>::binaryInsert(T &S, unsigned int n, typename T::iterator pos_pair) {
 	size_t	left = 0;
-	size_t	right = pos_pair - S.begin();
+	size_t	right = (size_t) (pos_pair - S.begin());
 	
+	if (n < S[left]) {
+		S.insert(S.begin(), n);
+		return ;
+	}
+
+	if (n > S[right]) {
+		S.push_back(n);
+		return;
+	}
+
 	while (left <= right) {
-		size_t mid = left + right / 2;
+		size_t mid = left + (right - left) / 2;
 		if (n > S[mid])
 			left = mid + 1;
 		else
@@ -203,76 +220,78 @@ template <typename T, typename P>
 T PmergeMe<T, P>::jacobsthalInsertionSort() {
 	T S;
 
-	// if (_isVec == true)
-	// 	S.reserve(_arr.size() + 1);
-	S.push_back(_arr[0]);
-	S.push_back(_arr[1]);
+	S.push_back(_parr[0].first);
+	S.push_back(_parr[0].second);
 
 	size_t pairIndex = 2;
-	size_t pairIndexMax = _arr.size() / 2;
+	size_t pairIndexMax = _parr.size();
 	size_t jacIndex = 1;
 	while (pairIndexMax >= jacobVec[jacIndex]) 
 	{
-		size_t bIndex = (pairIndex * 2) - 1;
-		while (bIndex <= jacobVec[jacIndex] * 2 - 1) {
-			S.push_back(_arr[bIndex]);
-			bIndex += 2;
+		size_t bIndex = pairIndex - 1;
+		while (bIndex < jacobVec[jacIndex]) {
+			S.push_back(_parr[bIndex].second);
+			bIndex++;
 		}
 
-		size_t aIndex = (jacobVec[jacIndex] - 1) * 2;
-		while (aIndex > (jacobVec[jacIndex - 1] - 1) * 2) {
-			binaryInsert(S, _arr[aIndex], std::find(S.begin(), S.end(), _arr[aIndex + 1]));
-			aIndex-=2;
+		size_t aIndex = jacobVec[jacIndex] - 1;
+		while (aIndex > jacobVec[jacIndex - 1] - 1) {
+			binaryInsert(S, _parr[aIndex].first, std::find(S.begin(), S.end(), _parr[aIndex].second));
+			aIndex--;
 		}
 		pairIndex = jacobVec[jacIndex] + 1;
 		jacIndex++;
 	}
 
-	while (pairIndex <= _arr.size() / 2) {
+	size_t bIndex = pairIndex - 1;
+	while (bIndex < _parr.size()) {
 
-		size_t bIndex = (pairIndex * 2) - 1;
-		while (bIndex < _arr.size()) {
+		S.push_back(_parr[bIndex].second);
+		bIndex++;
+	}
 
-			S.push_back(_arr[bIndex]);
-			bIndex += 2;
-		}
+	size_t aIndex = pairIndex - 1;
+	while (aIndex < _parr.size()) {
 
-		size_t aIndex = (pairIndex - 1) * 2;
-		while (aIndex < _arr.size()) {
-
-			binaryInsert(S, _arr[aIndex], std::find(S.begin(), S.end(), _arr[aIndex + 1]));
-			aIndex += 2;
-		}
-		pairIndex++;
+		binaryInsert(S, _parr[aIndex].first, std::find(S.begin(), S.end(), _parr[aIndex].second));
+		aIndex++;
 	}
 	return S;
 }
 
 // CORE FUNCTION
 template <typename T, typename P>
-void	PmergeMe<T, P>::displaySorted(char **av) {
+void	PmergeMe<T, P>::displaySorted(int ac, char **av) {
 	try {
-		buildArray(av);
-		if (isSorted()) {
-			std::cout << *this << std::endl;
-			std::cout << "Array already sorted - time to process = 0 us" << std::endl;
-			return;
-		}
+		struct timeval tv_beg;
+		gettimeofday(&tv_beg, NULL);
+		buildArray(ac, av);
+		// if (isSorted(_arr)) {
+		// 	std::cout << *this << std::endl;
+		// 	std::cout << "Array already sorted - time to process = 0 us" << std::endl;
+		// 	return;
+		// }
 		isOdd();
 		sortPairs();
-		std::cout << "After sort pairs yoyo = ";
-		printPairArr(std::cout);
-		std::cout << std::endl; // DEBUG
-		std::cout << std::endl;
 		mergeSortPair(_parr, 0, _parr.size() - 1);
-		std::cout << "After merge sort pairs = "; 
-		printPairArr(std::cout);
-		std::cout << std::endl; // DEBUG
-		// T new_arr = jacobsthalInsertionSort();
-		// for (size_t i = 0; i < new_arr.size(); i++) {
-		// 	std::cout << new_arr[i] << " ";
-		// }
-		// std::cout << std::endl;
+		T S = jacobsthalInsertionSort();
+		if (_odd == true) {
+			size_t i = 0;
+			while (i < S.size() && S[i] < _straggler) {
+				i++;
+			}
+			S.insert(S.begin() + i, _straggler);
+		}
+		struct timeval tv_end;
+		gettimeofday(&tv_end, NULL);
+		std::time_t totTime = tv_end.tv_usec - tv_beg.tv_usec;
+		std::cout << "The sorted list is: " << std::endl;
+		for (size_t i = 0; i < S.size(); i++) {
+			std::cout << S[i] << " ";
+		}
+		std::cout << std::endl;
+		std::cout << "It took " << totTime << "us to sort." << std::endl;
+		std::cout << std::endl;
 	}
 	catch (std::exception &e) {
 		std::cerr << "Error: " << e.what() << std::endl;

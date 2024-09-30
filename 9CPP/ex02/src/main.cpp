@@ -1,3 +1,6 @@
+#include <ctime>
+#include <sys/time.h>
+#include <list>
 #include "PmergeMe.hpp"
 
 bool isValidArray(char **av) {
@@ -33,26 +36,18 @@ int main(int ac, char **av) {
 	std::vector<std::pair<unsigned int, unsigned int> > pvec;
 	std::deque<unsigned int> deq;
 	std::deque<std::pair<unsigned int, unsigned int> > pdeq;
+	std::list<unsigned int> lst;
+	std::list<std::pair<unsigned int, unsigned int> > plst;
 
 	vec.reserve(ac - 1);
 	pvec.reserve((ac - 1) / 2);
 
-	// {	// VECTOR
-	// 	try {
-	// 		PmergeMe<std::vector<unsigned int>, std::vector<std::pair<unsigned int, unsigned int> > >	pm(vec, pvec, true);
-	// 		pm.displaySorted(&av[1]);
-
-	// 	}
-	// 	catch (std::exception &e) {
-	// 		std::cerr << "Error: " << e.what() << std::endl;
-	// 		return 1;
-	// 	}
-	// }
-
-	{	// DEQUE
+	{	// VECTOR
 		try {
-			PmergeMe<std::deque<unsigned int>, std::deque<std::pair<unsigned int, unsigned int> > >	pm(deq, pdeq, false);
-			pm.displaySorted(&av[1]);
+			PmergeMe<std::vector<unsigned int>, std::vector<std::pair<unsigned int, unsigned int> > >	pm(vec, pvec, true);
+			std::cout << "WITH VECTOR" << std::endl;
+			pm.displaySorted(ac - 1, &av[1]);
+			std::cout << "___________________" << std::endl;
 
 		}
 		catch (std::exception &e) {
@@ -60,4 +55,32 @@ int main(int ac, char **av) {
 			return 1;
 		}
 	}
+
+	{	// DEQUE
+		try {
+			PmergeMe<std::deque<unsigned int>, std::deque<std::pair<unsigned int, unsigned int> > >	pm(deq, pdeq, false);
+			std::cout << "WITH DEQUE" << std::endl;
+			pm.displaySorted(ac - 1, &av[1]);
+			std::cout << "___________________" << std::endl;
+
+		}
+		catch (std::exception &e) {
+			std::cerr << "Error: " << e.what() << std::endl;
+			return 1;
+		}
+	}
+
+	// {	// LIST
+	// 	try {
+	// 		PmergeMe<std::list<unsigned int>, std::list<std::pair<unsigned int, unsigned int> > >	pm(lst, plst, false);
+	// 		std::cout << "WITH LIST" << std::endl;
+	// 		pm.displaySorted(ac - 1, &av[1]);
+	// 		std::cout << "___________________" << std::endl;
+
+	// 	}
+	// 	catch (std::exception &e) {
+	// 		std::cerr << "Error: " << e.what() << std::endl;
+	// 		return 1;
+	// 	}
+	// }
 }
