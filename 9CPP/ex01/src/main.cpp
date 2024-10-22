@@ -40,7 +40,7 @@ int operation(int nb1, int nb2, char op) {
 
 int main(int ac, char **av) {
 	if (ac != 2) {
-		std::cerr << "Come on babe, we can do better!" << std::endl;
+		std::cerr << "Come on babe, we can do better!\n[Wrong number of arguments]" << std::endl;
 		return 1;
 	}
 	
@@ -54,17 +54,20 @@ int main(int ac, char **av) {
 	std::string signs = "+-*/";
 	std::stack<int> pile;
 
-	if (isNumber(input[i]) && isNumber(input[i + 2]) && isSign(input[i + 4], signs)) {
-		pile.push(input[i] - '0');
-		i = i + 2;
-	}
-	else 
-		return (printf("Error\n"), 1);
-	
 	while (input[i] != 0) {
-		if (isNumber(input[i]) && isSign(input[i + 2], signs)) {
+		if (input[i] == ' ' && input[i + 1] != 0)
+			i++;
+		if (isNumber(input[i]))
+			pile.push(input[i] - '0');
+		else if (isSign(input[i], signs)) {
+			if (pile.size() < 2)
+				return (printf("Error\n"), 1);
 			try {
-				int r = operation(pile.top(), input[i] - '0', input[i + 2]);
+				int b = pile.top();
+				pile.pop();
+				int a = pile.top();
+				pile.pop();
+				int r = operation(a, b, input[i]);
 				pile.push(r);
 			}
 			catch (std::exception &e) {
@@ -72,12 +75,9 @@ int main(int ac, char **av) {
 				return 1;
 			}
 		}
-		else 
-			return (printf("Error\n"), 1);
-		if (input[i + 3])
-			i = i + 4;
 		else
-			i = i + 3;
+			return (printf("Error\n"), 1);
+		i++;
 	}
 	std::cout << pile.top() << std::endl;
 	return 0;

@@ -59,18 +59,7 @@ int main(int ac, char **av) {
 	{	// DEQUE
 		try {
 			PmergeMe<std::deque<unsigned int>, std::deque<std::pair<unsigned int, unsigned int> > >	pm(deq, pdeq, false);
-			std::cout << "WITH DEQUE" << std::endl;
-			pm.displaySorted(ac - 1, &av[1]);
-			std::cout << "___________________" << std::endl;
-
-		}
-		catch (std::exception &e) {
-			std::cerr << "Error: " << e.what() << std::endl;
-			return 1;
-		}
-	}
-
-	// {	// LIST
+			std::cout << "WITH DEQUE" << std::endl;1 2 + 3 /
 	// 	try {
 	// 		PmergeMe<std::list<unsigned int>, std::list<std::pair<unsigned int, unsigned int> > >	pm(lst, plst, false);
 	// 		std::cout << "WITH LIST" << std::endl;
