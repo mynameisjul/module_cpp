@@ -1,5 +1,5 @@
 ### PROGRAM NAME ###
-NAME		:= name
+NAME		:= PmergeMe
 
 ### UTILS ###
 CC			:= c++

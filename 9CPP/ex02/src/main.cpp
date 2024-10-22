@@ -45,10 +45,7 @@ int main(int ac, char **av) {
 	{	// VECTOR
 		try {
 			PmergeMe<std::vector<unsigned int>, std::vector<std::pair<unsigned int, unsigned int> > >	pm(vec, pvec, true);
-			std::cout << "WITH VECTOR" << std::endl;
 			pm.displaySorted(ac - 1, &av[1]);
-			std::cout << "___________________" << std::endl;
-
 		}
 		catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
@@ -56,20 +53,26 @@ int main(int ac, char **av) {
 		}
 	}
 
-	{	// DEQUE
+	// DEQUE
 		try {
 			PmergeMe<std::deque<unsigned int>, std::deque<std::pair<unsigned int, unsigned int> > >	pm(deq, pdeq, false);
-			std::cout << "WITH DEQUE" << std::endl;1 2 + 3 /
-	// 	try {
-	// 		PmergeMe<std::list<unsigned int>, std::list<std::pair<unsigned int, unsigned int> > >	pm(lst, plst, false);
-	// 		std::cout << "WITH LIST" << std::endl;
-	// 		pm.displaySorted(ac - 1, &av[1]);
-	// 		std::cout << "___________________" << std::endl;
+			pm.displaySorted(ac -1, &av[1]);
+		}
+		catch (std::exception &e) {
+			std::cerr << "Error: " << e.what() << std::endl;
+			return 1;
+		}
+	
+	// LIST
+		// try {
+		// 	PmergeMe<std::list<unsigned int>, std::list<std::pair<unsigned int, unsigned int> > >	pm(lst, plst, false);
+		// 	std::cout << "WITH LIST" << std::endl;
+		// 	pm.displaySorted(ac - 1, &av[1]);
+		// 	std::cout << "___________________" << std::endl;
 
-	// 	}
-	// 	catch (std::exception &e) {
-	// 		std::cerr << "Error: " << e.what() << std::endl;
-	// 		return 1;
-	// 	}
-	// }
+		// }
+		// catch (std::exception &e) {
+		// 	std::cerr << "Error: " << e.what() << std::endl;
+		// 	return 1;
+		// }
 }

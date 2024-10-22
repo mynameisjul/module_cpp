@@ -285,13 +285,24 @@ void	PmergeMe<T, P>::displaySorted(int ac, char **av) {
 		struct timeval tv_end;
 		gettimeofday(&tv_end, NULL);
 		std::time_t totTime = tv_end.tv_usec - tv_beg.tv_usec;
-		std::cout << "The sorted list is: " << std::endl;
-		for (size_t i = 0; i < S.size(); i++) {
-			std::cout << S[i] << " ";
+		if (_isVec) {
+			std::cout << "The unsorted list is: " << std::endl;
+			size_t i = 0;
+			while (av[i + 1] != 0) {
+				std::cout << av[i] << " ";
+				i++;
+			}
+			std::cout << av[i] << std::endl;
+			std::cout << "The sorted list is: " << std::endl;
+			for (size_t i = 0; i < S.size(); i++) {
+				std::cout << S[i] << " ";
+			}
+			std::cout << std::endl;
+			std::cout << "It took " << totTime << "us to sort with vector." << std::endl;
 		}
-		std::cout << std::endl;
-		std::cout << "It took " << totTime << "us to sort." << std::endl;
-		std::cout << std::endl;
+		else {
+			std::cout << "It took " << totTime << "us to sort with deque." << std::endl;
+		}
 	}
 	catch (std::exception &e) {
 		std::cerr << "Error: " << e.what() << std::endl;
